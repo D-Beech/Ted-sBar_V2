@@ -72,10 +72,16 @@ max-height: 60px;
     height: 80vh;
 }
 
+.cardBox{
+    display: none;
+}
+
 </style>
 
 
 <body>
+    {% include "card_form.html" %}
+
     <div class="container">
         
         <a href="/order" class="btn btn-secondary">Edit Cart</a>
@@ -93,8 +99,7 @@ max-height: 60px;
     <div class="container">
         <div class="row">
             <div class="col-sm-6">     
-                
-            <h2>Cart Contents</h2>
+            <label for="exampleInputEmail1">Cart</label>
             <div class="check-out-cart" id="check-out-cart">
 
                 {% for item in cartItems%}
@@ -112,9 +117,9 @@ max-height: 60px;
             </div>
 
         </div>
-            <div class="col-sm-6">        
-               <div class="formBox" >
-                <form action="/newOrder" method="POST">
+            <div class="col-sm-3">        
+               <div class="formBox" id="formBox">
+                <form id="orderDetails "action="/newOrder" method="POST">
                     <div class="form-groupneeds-validation" novalidate>
                         <label for="exampleInputEmail1">First Name</label>
                         <input type="text" class="form-control" name="fName" id="firstNameBox" placeholder="Enter name" required>
@@ -148,13 +153,56 @@ max-height: 60px;
                         <option value="9.30pm">9.30pm</option>
                       </select>
 
-                      <input type="submit" class="btn btn-primary proceedBtn" value="Proceed to Payment"></input>
                   </form>
+
+
+                  
 
 
                 
                </div>
             </div>
+
+               
+
+               <div class="col-sm-3">
+                <form>
+
+                    <div class="form-group">
+                        <label for="card_name">Name of Card Holder</label>
+                        <input type="text" class="form-control" name="lName" id="lastNameBox" placeholder="Enter name" required>
+                        <small id="emailHelp" class="form-text text-muted"></small>
+                    </div>
+
+                    <div class="form-groupneeds-validation" novalidate>
+                        <label for="16-Digit Card Number">16-Digit Card Number</label>
+                        <input type="text" class="form-control" name="fName" id="firstNameBox" placeholder="xxxx xxxx xxxx xxxx" required>
+                        <small id="Enter your card Number" class="form-text text-muted"></small>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">CVC</label>
+                      <input type="text" class="form-control"name="email" id="emailBox" aria-describedby="emailHelp" placeholder="Enter CVC" required>
+                      <small id="emailHelp" class="form-text text-muted">The three numbers on the back of your card</small>
+                    </div>
+
+                      <input type="submit" class="btn btn-primary proceedBtn" value="Complete Payment" onclick="completeOrder()"></input>
+                  </form>
+
+
+                
+               </div>
+
+
+
+
+
+
+
+            
         </div>
     </div>
     
@@ -168,8 +216,8 @@ max-height: 60px;
 
 <script>
 
-function proceed(){
-
+function completeOrder(){
+    $("#orderDetails").submit()
 }
 
 
