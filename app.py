@@ -21,11 +21,11 @@ cart = Cart()
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html",cartItems=cart.get_contents(), cartTotal=cart.total_price())
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html", cartItems=cart.get_contents(), cartTotal=cart.total_price())
 
 @app.route("/newOrder", methods=['POST'])
 def new_order():
@@ -51,6 +51,9 @@ def new_order():
 
 @app.route("/check_out", methods=['GET'])
 def check_out():
+    if (cart.get_contents() == []):
+        return redirect('/order')
+    #need to fix empty cart logic on client side
     return render_template("check_out.html", cartItems=cart.get_contents(), cartTotal=cart.total_price())
 
 @app.route("/order/complete", methods=['GET'])
