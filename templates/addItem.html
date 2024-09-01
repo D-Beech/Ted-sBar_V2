@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    /* Style the top navigation bar */
+    .navbar {
+        overflow: hidden;
+        /* Hide overflow */
+        background-color: #333;
+        /* Dark background color */
+    }
+
+    /* Style the navigation bar links */
+    .navbar a {
+        float: left;
+        /* Make sure that the links stay side-by-side */
+        display: block;
+        /* Change the display to block, for responsive reasons (see below) */
+        color: white;
+        /* White text color */
+        text-align: center;
+        /* Center the text */
+        padding: 14px 20px;
+        /* Add some padding */
+        text-decoration: none;
+        /* Remove underline */
+    }
+
+    /* Right-aligned link */
+    .navbar a.right {
+        float: right;
+        /* Float a link to the right */
+    }
+
+    /* Change color on hover/mouse-over */
+    .navbar a:hover {
+        background-color: #ddd;
+        /* Grey background color */
+        color: black;
+        /* Black text color */
+    }
+
+    .container {
+        width: 1400px;
+        margin: auto;
+        /* background: pink; */
+        display: flex;
+    }
+
+
+/*banner*/
+.banner{
+    width: 100%;
+    height: 40vh;
+    margin-top: 20px;
+    border-radius: 20px;
+    background: black;
+    align-self: flex-end;
+}
+
+.titleBox{
+    width: 100%;
+    height: 20vh;
+    margin-top: 20px;
+    border-radius: 20px;
+    background: beige;
+    align-self: flex-end;
+}
+
+.filterMenu{
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    background: beige;
+    align-self: flex-end;
+}
+
+.filterMenu button{
+    /* background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;  */
+}
+
+
+
+
+.navbar a {
+  float: left; /* Make sure that the links stay side-by-side */
+  display: block; /* Change the display to block, for responsive reasons (see below) */
+  color: white; /* White text color */
+  text-align: center; /* Center the text */
+  padding: 14px 20px; /* Add some padding */
+  text-decoration: none; /* Remove underline */
+}
+
+.itemGallery{
+    width: 100%;
+    height: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* background: grey; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;    
+    /* display: none; */
+}
+
+.itemCard{
+    width: 48%;
+    height: 150px;
+    margin-top: 5px;
+    background: white;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
+
+.itemName{
+    grid-column: 1/8;
+    padding-left: 20px;
+    grid-row: 3;
+}
+
+.itemDescription{
+    grid-column: 1/8;
+    padding-left: 20px;
+    grid-row: 4;
+}
+
+.itemPrice{
+    grid-column: 1/8;
+    padding-left: 20px;
+    grid-row: 7;
+}
+
+.itemImg{
+    grid-column: 10/13;
+    grid-row: 1/9;
+    background: darkgrey;
+}
+
+.itemAddToCartBtn{
+    background: white;
+    grid-column: 11;
+    border-radius: 20px;
+    grid-row: 6;
+    height: 35px;   
+}
+
+
+.cart{
+    width: 400px;
+    height: 100vh;
+    background: lightblue;
+    position: fixed;
+    top:0;
+    right:0;
+}
+
+.exit{
+    height: 10%;
+    background: red;
+}
+
+.cartContent{
+    height:80%;
+    justify-content: center;
+    overflow: scroll;
+}
+
+.proceed{
+    height:10%;
+    background: red;
+}
+
+
+
+.cart .itemCard{
+    width: 80%;
+    height: 100px;
+}
+
+
+</style>
+
+
+<body>
+
+    <div class="container">
+        <h1>Add Item</h1>
+        <br/>
+        <form action="/addItem" method="POST">
+            <input type="text" placeholder="Name" name="name">
+            <input type="text" placeholder="Description" name="description">
+            <input type="number" placeholder="0.00" name="price">
+            <input type="submit" value="Add Item">
+        </form>
+    </div>
+
+    <br/><br/>
+
+    <div class="container">
+
+  
+    </div>
+
+
+    <!--Item Gallery Development Below-->>
+    <div class="container">
+        <div class="itemGallery">
+            {% for item in stuff%}
+
+            <form method="POST" action="/add">
+                <div class="itemCard">
+                    <h3 class="itemName">{{item.name}}</h3>
+                    <p class="itemDescription">{{item.description}}</p>
+                    <h4 class="itemPrice">$ {{item.price}}</h4>
+                    <div class="itemImg">
+                        
+                    </div>
+
+                    <input type="hidden" value="{{item.id}}" name="itemId">
+                    <div class="addToCartButton">
+                        <input type="submit" value="Add To Cart">
+                    </div>
+                </div> 
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--Cart Development below-->
+    <div class="container">
+        <div class="cart" id="cart">
+
+            <div class="exit">
+                <button onclick=closeCart()>x</button>
+
+            </div>
+
+
+            <div class="cartContent">
+                {% for item in cartItems%}
+                <form method="POST" action="/remove">
+                    <div class="itemCard">
+                        <h3 class="itemName">{{item.name}}</h3>
+                        <p class="itemDescription">{{item.description}}</p>
+                        <h4 class="itemPrice">$ {{item.price}}</h4>
+                        <div class="itemImg">
+                            
+                        </div>
+    
+                        <input type="hidden" value="{{item.id}}" name="itemId">
+                        <div class="removeBtn">
+                            <input type="submit" value="Remove Item">
+                        </div>
+                    </div> 
+                </form>
+                {% endfor %}
+            </div>
+
+
+
+
+            
+            <div class="proceed">
+                <form method="POST" action="/empty">
+                    <input type="submit" value="Empty">
+                </form>
+                <div>
+                    {{cartTotal}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+let Contents = []
+
+function closeCart(){
+    document.getElementById("cart").style.display="none";
+    console.log("Cart Closed Click")
+}
+
+function killItemCard(card_id){
+    document.getElementById(card_id).style.display="none";
+    console.log(card_id + "success")  
+}
+
+function addItem(card_id){
+    let html = document.getElementById("card_id").innerHTML;
+    document.getElementById("cartContent").innerHTML = html;
+}
+
+function fillCart(){
+
+}
+
+</script>
+
+</html>

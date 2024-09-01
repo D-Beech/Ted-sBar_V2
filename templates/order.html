@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>Landing Page</title>
+
+  <style>
+
+    .heroContainer{
+      max-width: 100%;
+      max-height: 400px; 
+      overflow: hidden;
+    }
+
+    .heroContainer img{
+      max-width: 100%;
+    }
+
+    .orderHeader{
+      display: flex;
+      padding-top: 20px;
+     
+    }
+
+    .card{
+      margin-top: 6px;
+      padding: 0px;
+    }
+
+    .cardLeft{
+      width: 70%;
+    }
+
+    .cardRight{
+      width: 30%;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: space-around;
+      justify-content: center;
+    }
+
+    .cardRight img{
+      height: 100%;
+      max-width: 100%;
+    }
+
+    .btn-group{
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    
+
+/*Cart Stuff*/
+
+div::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
+
+/* The side navigation menu */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  right: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  color: #818181;
+  display: block;
+  transition: 0.1s;
+}
+
+.sidenav h3 {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidenav .cart-contents{
+    background: white;
+    width: 100%;
+    height: 80%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+}
+
+.sidenav .button-box{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+
+
+.check-out-button{
+    background: white;
+    border: white solid;
+    max-height: 100px;
+    border-radius: 20px;
+    width: 200px;
+    transition: 0.1s;
+}
+
+.check-out-button
+
+.check-out-button p{
+    color: #f1f1f1;
+}
+
+.check-out-button:hover{
+    background: white;
+    opacity: 0.8;
+}
+
+.cart-contents .card{
+    margin: 2px;
+    max-height: 60px;
+}
+
+.cart-contents .card-body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.card-body .name{
+    grid-column: 1 / span 2;
+}
+
+.card-body .price{
+    grid-column: 3;
+        justify-self: end;
+}
+
+.card-body .remove{
+    justify-self: end;
+    grid-column: 4;
+}
+
+
+
+
+
+
+
+    
+    </style>
+
+</head>
+
+
+
+
+
+<body>
+
+
+<!--Navbar-->  
+{% include "navbar.html" %}
+
+
+
+
+
+<!--Hero-->  
+<div class="container">
+  <div class="heroContainer">
+    <img src="static\images\straw.jpg" class="hero" alt="Responsive image">
+  </div>
+</div>
+
+<!--Heading-->
+
+<div class="container">
+  <div class="orderHeader">
+    <h2 class="align-top">Order Pick Up</h2>
+  </div>
+</div> 
+
+<div class="container">
+    <h3 class="align-top">Open 10:00am - 10:00pm</h3>
+</div>  
+
+<!--Filters-->
+
+<div class="container">
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" onclick="showAll()">Show All</button>
+    <button type="button" class="btn btn-secondary" onclick="showBurgers()">Burgers</button>
+    <button type="button" class="btn btn-secondary" onclick="showSnacks()">Snacks</button>
+    <button type="button" class="btn btn-secondary">Beer</button>
+    <button type="button" class="btn btn-secondary">Wine</button>
+  </div>
+</div>
+
+
+
+<!--Menu-->
+
+<div class="container" id="burgers">
+
+  <!--Cards-->
+
+  
+  <h1>Burgers</h1>
+  <div class="row">
+
+    {% for item in burgers %}
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body d-flex">
+            <div class="cardLeft">
+              <h5 class="card-title">{{item.name}}</h5>
+              <p class="card-text">{{item.description}}</p>
+              <p class="card-text">$ {{item.price}}</p>
+              <button href="#" class="btn btn-primary" id="{{item.id}}" onclick="addToCartClick(this.id)">Add to Cart</button>
+            </div>
+            <div class="cardRight">
+              <img src="static\images\straw.jpg" alt="">
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div> 
+
+<div class="container" id="snacks">
+  <h1>Snacks</h1>
+  <div class="row">
+    {% for item in snacks %}
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body d-flex">
+            <div class="cardLeft">
+              <h5 class="card-title">{{item.name}}</h5>
+              <p class="card-text">{{item.description}}</p>
+              <p class="card-text">$ {{item.price}}</p>
+              <button class="btn btn-primary" id="{{item.id}}" onclick="addToCartClick(this.id)">Add to Cart</button>
+            </div>
+            <div class="cardRight">
+              <img src="static\images\straw.jpg" alt="">
+            </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div> 
+
+
+{% include "footer.html" %}
+
+<!--Cart-->
+
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">x</a>
+  <h3 href="#">My Order</h3>
+
+
+
+  <div class="cart-contents" id="cart-contents">
+
+      {% for item in cartItems%}
+      <div class="card">
+          <div class="card-body">
+            <p class="name">{{item.name}}</p>
+            <p class="price">${{item.price}}</p>
+            
+            <input type="submit" id="{{item.id}}" class="remove" onclick="removeFromCartClick(this.id)" value="x"></input>
+          </div>
+      </div>
+      {% endfor %}
+  </div>
+
+  <div class="button-box" id="check-out-button" >
+      <a class="check-out-button" href="/check_out">Check Out ${{cartTotal}}</a>
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+
+<script>
+var firstClick = 0;
+
+//Item Gallery Filter Functions
+function hideAll(){
+    document.getElementById("snacks").style.display="none";
+    document.getElementById("burgers").style.display="none";
+}
+
+function showBurgers(){
+    hideAll();
+    document.getElementById("burgers").style.display="block";
+}
+
+function showAll(){
+    document.getElementById("burgers").style.display="block";
+    document.getElementById("snacks").style.display="block";
+}
+
+function showSnacks(){
+    hideAll();
+    document.getElementById("snacks").style.display="block";
+        }
+
+//Cart
+    /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+    function openCart() {
+    document.getElementById("mySidenav").style.width = "300px";
+  }
+  
+  /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+  function closeCart() {
+    document.getElementById("mySidenav").style.width = "0";
+  }
+
+
+
+
+
+
+//Add to Cart
+function addToCartClick(clicked_id){
+  if (firstClick == 0){
+    openCart()
+    firstClick = 1
+  }
+
+  console.log(clicked_id + " add to cart click")
+  url = '/add/' + clicked_id
+
+  console.log(url)
+
+  const asyncGetCall = async () => {
+          try {
+              const response = await fetch(url);
+              const data = await response.json();
+              console.log(data)
+              updateCart()
+             } catch(error) {
+          // enter your logic for when there is an error (ex. error toast)
+                console.log(error)
+               } 
+          }
+ asyncGetCall();
+}
+
+function removeFromCartClick(clicked_id){
+  console.log(clicked_id + "remove from cart click")
+  url = '/remove/' + clicked_id
+
+  console.log(url)
+
+  const asyncGetCall = async () => {
+          try {
+              const response = await fetch(url);
+              const data = await response.json();
+              console.log(data)
+              updateCart()
+             } catch(error) {
+          // enter your logic for when there is an error (ex. error toast)
+                console.log(error)
+               } 
+          }
+ asyncGetCall();
+}
+
+
+function emptyCartClick(){
+  console.log("empty cart click")
+  url = '/empty'
+
+  console.log(url)
+
+  const asyncGetCall = async () => {
+          try {
+              const response = await fetch(url);
+              const data = await response.json();
+              updateCart()
+              loadDoc(data);
+             } catch(error) {
+          // enter your logic for when there is an error (ex. error toast)
+                console.log(error)
+               } 
+          }
+ asyncGetCall();
+
+}
+
+function updateCart(){
+    $( "#cart-contents" ).load(window.location.href + " #cart-contents" );
+    $( "#check-out-button" ).load(window.location.href + " #check-out-button" );
+}
+
+function checkOut(){
+  console.log("checkout click")
+  url = "/check_out"
+
+  console.log(url)
+
+  const asyncGetCall = async () => {
+          try {
+              const response = await fetch(url);
+              console.log(data)
+             } catch(error) {
+          // enter your logic for when there is an error (ex. error toast)
+                console.log(error)
+               } 
+          }
+ asyncGetCall();
+}
+
+
+
+</script>
+
+
+</body>
+</html>

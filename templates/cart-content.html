@@ -1,0 +1,10 @@
+{% for item in cartItems%}
+<div class="card">
+    <div class="card-body">
+      <p class="name">{{item.name}}</p>
+      <p class="price">${{item.price}}</p>
+      <input type="hidden" value="{{item.id}}" name="itemId">
+      <input type="submit" class="remove">x</p>
+    </div>
+</div>
+{% endfor %}
