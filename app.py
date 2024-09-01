@@ -5,7 +5,7 @@ from models import *
 from serializers import *
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/TedsBarAndCafeWebiste-DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:mandeepsingh@localhost:5432/TedsBarAndCafeWebiste-DB'
 
 #Intitialize the database
 db.init_app(app)
