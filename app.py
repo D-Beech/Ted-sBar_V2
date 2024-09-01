@@ -23,6 +23,10 @@ cart = Cart()
 def home():
     return render_template("index.html",cartItems=cart.get_contents(), cartTotal=cart.total_price())
 
+@app.route("/about_us")
+def about():
+    return render_template("about.html", cartItems=cart.get_contents(), cartTotal=cart.total_price())
+
 @app.route("/contact")
 def contact():
     return render_template("contact.html", cartItems=cart.get_contents(), cartTotal=cart.total_price())
@@ -108,7 +112,7 @@ def addItem():
         item_name = request.form['name']
         item_description = request.form['description']
         item_price = request.form['price']
-        new_item = Burger(name=item_name, description=item_description, price=item_price)
+        new_item = Snack(name=item_name, description=item_description, price=item_price)
 
         try:
             db.session.add(new_item)
