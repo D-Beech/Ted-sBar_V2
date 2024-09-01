@@ -12,6 +12,11 @@
 
 <style>
 
+div::-webkit-scrollbar {
+  display: none;
+  /* for Chrome, Safari, and Opera */
+}
+
 .btnBox{
     margin-top: 10px;
 }
@@ -27,7 +32,7 @@
 }
 
 .check-out-cart{
-    max-height: 60vh;
+    height: 70%;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -63,6 +68,10 @@ max-height: 60px;
     margin-top: 30px;
 }
 
+.row {
+    height: 80vh;
+}
+
 </style>
 
 
@@ -85,7 +94,7 @@ max-height: 60px;
         <div class="row">
             <div class="col-sm-6">     
                 
-                
+            <h2>Cart Contents</h2>
             <div class="check-out-cart" id="check-out-cart">
 
                 {% for item in cartItems%}
@@ -99,7 +108,7 @@ max-height: 60px;
             </div>
 
             <div>
-                <h1>Order Total ${{cartTotal}}</h1>
+                <h3>Order Total ${{cartTotal}}</h3>
             </div>
 
         </div>
