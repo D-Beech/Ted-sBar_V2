@@ -28,11 +28,11 @@ div::-webkit-scrollbar {
 }
 
 .row{
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 .check-out-cart{
-    height: 70%;
+    max-height: 60%;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -65,136 +65,228 @@ max-height: 60px;
 }
 
 .proceedBtn{
-    margin-top: 30px;
+    margin-top: 10px;
+    
 }
 
 .row {
     height: 80vh;
 }
 
-.cardBox{
-    display: none;
+
+
+.cartBox{
+    height:500px;
 }
+
+
+
+.row{
+    max-height: 700px;
+}
+
+.leftSummary{
+    background: #f7a93350;
+    border-radius: 20px;
+    padding-right: 10px;
+}
+
+.rightSummary{
+    background: lightgrey;
+    border-radius: 20px;
+    padding-right: 10px;
+}
+
+.container{
+    margin-top: 30px;
+    background: rgba(211, 211, 211, 0.288);
+}
+
+form .row{
+    max-height: 70px;
+}
+
+
 
 </style>
 
 
 <body>
-    {% include "card_form.html" %}
-
+  
+    
     <div class="container">
-        
-        <a href="/order" class="btn btn-secondary">Edit Cart</a>
-        
+            
+        <a class="nav-link text-center text-light bg-dark" href="/order">Edit Your Order (Return to Menu)</a>
+
         <div class="titleBox text-center">
             <h2>Order Details</h2>
         </div>
 
-    </div>
-
-    <div class="container">
-
-    </div>
-
-    <div class="container">
         <div class="row">
-            <div class="col-sm-6">     
-            <label for="exampleInputEmail1">Cart</label>
-            <div class="check-out-cart" id="check-out-cart">
+            <div class="col-sm-6 leftSummary">
+                <h3 class="text-center">Order Summary</h3>
+                <div class="check-out-cart cartBox" id="check-out-cart">
 
-                {% for item in cartItems%}
-                <div class="card">
-                    <div class="card-body">
-                      <p class="name">{{item.name}}</p>
-                      <p class="price">${{item.price}}</p>
+                    {% for item in cartItems%}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="name">{{item.name}}</p>
+                            <p class="price">${{item.price}}</p>
+                        </div>
                     </div>
-                  </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <h3 class="text-center">Order Total ${{cartTotal}}</h3>
+
+                <div>
+                    
+                </div>
+
             </div>
-
-            <div>
-                <h3>Order Total ${{cartTotal}}</h3>
-            </div>
-
-        </div>
-            <div class="col-sm-3">        
-               <div class="formBox" id="formBox">
-                <form id="orderDetails "action="/newOrder" method="POST">
-                    <div class="form-groupneeds-validation" novalidate>
-                        <label for="exampleInputEmail1">First Name</label>
-                        <input type="text" class="form-control" name="fName" id="firstNameBox" placeholder="Enter name" required>
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Last Name</label>
-                        <input type="text" class="form-control" name="lName" id="lastNameBox" placeholder="Enter name" required>
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Phone Number</label>
-                        <input type="text" class="form-control" name="phone" id="nameBox" aria-describedby="emailHelp" placeholder="Enter number" required>
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                    </div>
-
-
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">Email address</label>
-                      <input type="email" class="form-control"name="email" id="emailBox" aria-describedby="emailHelp" placeholder="Enter email" required>
-                      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-
-                    <label class="mr-sm-2" for="inlineFormCustomSelect">Pick up Time</label>
-                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="pickup">
-                        <option selected>ASAP</option required>
-                        <option value="8.30pm">8.30pm</option>
-                        <option value="9.00pm">9.00pm</option>
-                        <option value="9.30pm">9.30pm</option>
-                      </select>
-
-                  </form>
-
-
-                  
-
-
+            <div class="col-sm-6" id="detailsBox">   
                 
-               </div>
+                <div class="col-sm3">
+
+                    
+                <h5 >Customer Details</h5>    
+                <form id="orderDetails "action="/newOrder" class="needs-validation" method="POST" novalidate>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group needs-validation" >
+                                <label for="exampleInputEmail1">First Name</label>
+                                <input type="text" class="form-control" name="fName" id="firstNameBox" placeholder="Enter name" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group needs-validation">
+                                <label for="exampleInputEmail1">Last Name</label>
+                                <input type="text" class="form-control" name="lName" id="lastNameBox" placeholder="Enter name" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group needs-validation">
+                                <label for="exampleInputEmail1">Phone Number</label>
+                                <input type="text" class="form-control" name="phone" id="nameBox" aria-describedby="emailHelp" placeholder="Enter number" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group needs-validation">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control"name="email" id="emailBox" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                              </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col-6">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Pick up Time</label>
+                            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="pickup">
+                                <option selected>ASAP</option required>
+                                <option value="8.30pm">8.30pm</option>
+                                <option value="9.00pm">9.00pm</option>
+                                <option value="9.30pm">9.30pm</option>
+                              </select>
+                        </div>
+                    </div>
+
+                    <br>
+                    <h5 >Payment Details</h5>    
+
+                    <div class="row ">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="card_name">Name of Card Holder</label>
+                                <input type="text" class="form-control" name="lName" id="lastNameBox" placeholder="Enter name" required>
+                                <small id="cardName" class="form-text text-muted"></small>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="form-group" id="expiration-date">
+                                <label>Exp</label>
+                                <select class="custom-select mr-sm-2">
+                                    <option value="01">Jan</option>
+                                    <option value="02">Feb </option>
+                                    <option value="03">March</option>
+                                    <option value="04">April</option>
+                                    <option value="05">May</option>
+                                    <option value="06">June</option>
+                                    <option value="07">July</option>
+                                    <option value="08">August</option>
+                                    <option value="09">September</option>
+                                    <option value="10">October</option>
+                                    <option value="11">November</option>
+                                    <option value="12">December</option>
+                                </select>
+
+                        
+
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group" id="expiration-date">
+                                <label>Exp</label>
+                                    <select class="custom-select mr-sm-2">
+                                        <option value="16"> 2024</option>
+                                        <option value="17"> 2025</option>
+                                        <option value="18"> 2026</option>
+                                        <option value="19"> 2027</option>
+                                        <option value="20"> 2028</option>
+                                        <option value="21"> 2029</option>
+                                    </select>
+                                </select>
+
+                        
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row ">
+                        <div class="col">
+                            <label for="16-Digit Card Number">16-Digit Card Number</label>
+                            <input type="text" pattern="[0-9]{16}" minlength="16" class="form-control" name="fName" id="firstNameBox" placeholder="xxxx xxxx xxxx xxxx" required>
+                            <small id="cardNumber" class="form-text text-muted"></small>
+                        </div>
+
+                        <div class="col">
+                            <label for="exampleInputEmail1">CVC</label>
+                            <input type="text" pattern="[0-9]{3}"  minlength="3" class="form-control" i aria-describedby="emailHelp" placeholder="Enter CVC" required>
+                            <small id="cvc" class="form-text text-muted">The three numbers on the back of your card</small>
+                        </div>
+                    </div>
+
+
+                    <div class="row ">
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-primary proceedBtn" onclick="proceedToPayment()">Complete Order</button> 
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+                </form>
             </div>
 
                
-
-               <div class="col-sm-3">
-                <form>
-
-                    <div class="form-group">
-                        <label for="card_name">Name of Card Holder</label>
-                        <input type="text" class="form-control" name="lName" id="lastNameBox" placeholder="Enter name" required>
-                        <small id="emailHelp" class="form-text text-muted"></small>
-                    </div>
-
-                    <div class="form-groupneeds-validation" novalidate>
-                        <label for="16-Digit Card Number">16-Digit Card Number</label>
-                        <input type="text" class="form-control" name="fName" id="firstNameBox" placeholder="xxxx xxxx xxxx xxxx" required>
-                        <small id="Enter your card Number" class="form-text text-muted"></small>
-                    </div>
-
-
-
-
-                    <div class="form-group">
-                      <label for="exampleInputEmail1">CVC</label>
-                      <input type="text" class="form-control"name="email" id="emailBox" aria-describedby="emailHelp" placeholder="Enter CVC" required>
-                      <small id="emailHelp" class="form-text text-muted">The three numbers on the back of your card</small>
-                    </div>
-
-                      <input type="submit" class="btn btn-primary proceedBtn" value="Complete Payment" onclick="completeOrder()"></input>
-                  </form>
-
-
-                
-               </div>
 
 
 
@@ -216,9 +308,45 @@ max-height: 60px;
 
 <script>
 
+
+$("#idForm").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var actionUrl = form.attr('action');
+
+
+$.ajax({
+    type: "POST",
+    url: actionUrl,
+    data: form.serialize(), // serializes the form's elements.
+    success: function(data)
+    {
+      alert(data); 
+    }
+});
+
+});
+
+
+
+
+
+
+
+
 function completeOrder(){
     $("#orderDetails").submit()
 }
+
+
+// $("#orderDetails").addEventListener('submit', function() {
+//     alert("yo")
+// });
+    
+
+
 
 
 (function() {

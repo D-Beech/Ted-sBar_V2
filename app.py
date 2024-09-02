@@ -5,7 +5,7 @@ from models import *
 from serializers import *
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:mandeepsingh@localhost:5432/TedsBarAndCafeWebiste-DB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/TedsBarAndCafeWebiste-DB'
 
 #Intitialize the database
 db.init_app(app)
@@ -42,16 +42,16 @@ def new_order():
 
         print(f_name, l_name, pickup_time)
 
-        customer = Customer_Details(f_name, l_name, phone, email, pickup_time, cart.get_contents_as_ids())
+        # customer = Customer_Details(f_name, l_name, phone, email, pickup_time, cart.get_contents_as_ids())
 
-        try:
-            db.session.add(customer)
-            db.session.commit()
-            return redirect('/order')
-        except:
-            return "There was an error adding the customer"
+        # try:
+        #     db.session.add(customer)
+        #     db.session.commit()
+        #     return redirect('/order')
+        # except:
+        #     return "There was an error adding the customer"
             
-    return "Error"
+    return {"it works":"it works"}
 
 @app.route("/check_out", methods=['GET'])
 def check_out():
