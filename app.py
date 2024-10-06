@@ -14,14 +14,30 @@ migrate=Migrate(app, db)
 #Initialize Cart
 # cart = Cart()
 cart = Cart()
+customer = Customer_Details()
+completedOrder = False
 
 # @app.route("/")
 # def home():
 #     return render_template("index.html")
 
+def newCustomer(c):
+    customer = c
+    return 
+
 @app.route("/")
 def home():
     return render_template("index.html",cartItems=cart.get_contents(), cartTotal=cart.total_price())
+
+@app.route("/completed")
+def completed():
+    Burgers = Burger.query.all()
+    Snacks = Snack.query.all()
+    Beers = Beer.query.all()
+    details = customer
+    print(details.email)
+    return render_template("completed.html", burgers=Burgers, snacks=Snacks, cartItems=cart.get_contents(), cartTotal=cart.total_price(), order_details=details)
+
 
 @app.route("/about_us")
 def about():
@@ -31,8 +47,10 @@ def about():
 def contact():
     return render_template("contact.html", cartItems=cart.get_contents(), cartTotal=cart.total_price())
 
-@app.route("/newOrder", methods=['POST'])
+@app.route("/newOrder", methods=['POST', 'GET'])
 def new_order():
+    details = []
+    
     if request.method == "POST":
         f_name = request.form['fName']
         l_name = request.form['lName']
@@ -42,16 +60,25 @@ def new_order():
 
         print(f_name, l_name, pickup_time)
 
-        # customer = Customer_Details(f_name, l_name, phone, email, pickup_time, cart.get_contents_as_ids())
+        details.append(Customer_Details(f_name, l_name, phone, email, pickup_time, cart.get_contents_as_ids()))
 
-        # try:
-        #     db.session.add(customer)
-        #     db.session.commit()
-        #     return redirect('/order')
-        # except:
-        #     return "There was an error adding the customer"
+        try:
+            db.session.add(details[0])
+            db.session.commit()
+            cart.empty_cart()
+        except:
+            return "There was an error adding the customer"
+    
+    if details==[]:
+        return redirect("/order")
+        
+    Burgers = Burger.query.all()
+    Snacks = Snack.query.all()
+    Beers = Beer.query.all()
+    print(details[0].email, "working")
+    
+    return render_template("order.html", burgers=Burgers, snacks=Snacks, cartItems=cart.get_contents(), cartTotal=cart.total_price(), showFeedback = True, order_details=details[0])
             
-    return {"it works":"it works"}
 
 @app.route("/check_out", methods=['GET'])
 def check_out():
@@ -72,7 +99,8 @@ def order():
     Burgers = Burger.query.all()
     Snacks = Snack.query.all()
     Beers = Beer.query.all()
-    return render_template("order.html", burgers=Burgers, snacks=Snacks, cartItems=cart.get_contents(), cartTotal=cart.total_price())
+    print(customer.first_name)
+    return render_template("order.html", burgers=Burgers, snacks=Snacks, cartItems=cart.get_contents(), cartTotal=cart.total_price(), showFeedback = False, order_details=customer)
 
 #Cart APIS
 @app.route("/cart", methods=['GET'])
@@ -92,15 +120,6 @@ def remove_from_cart(id):
 
 @app.route("/empty", methods=['GET'])
 def empty_cart():
-
-    # formatted_cart = [{'id': item.product_id, 
-    #                    'name': item.name,
-    #                    'description': item.description,
-    #                    'price': item.price,
-    #                    'img_path': item.img_path,
-    #                    } for item in cart]
-
-
     cart.empty_cart()
     return {"status": "200"}
 

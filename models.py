@@ -130,17 +130,16 @@ class Customer_Details(db.Model):
     pick_up_time = db.Column(db.String(30))
     cart = db.Column(ARRAY(db.Integer))
 
-    def __init__(self, firstName, lastName, phone, email, pickUpTime, cart):
+    def __init__(self, firstName="", lastName="", phone="", email="", pickUpTime="", cart=[]):
         self.first_name = firstName
         self.last_name = lastName
         self.phone = phone
         self.email = email
         self.pick_up_time = pickUpTime
-        self.cart = cart        
+        self.cart = cart
 
-
-
-
+    def is_customer(self, customer):
+        self = customer
 
 
 class Completed_Order():

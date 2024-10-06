@@ -54,6 +54,11 @@
       padding-top: 10px;
       padding-bottom: 10px;
     }
+
+    .sticky-top{
+      background: rgb(219, 95, 124);
+      padding: 5px;
+    }
     
 
 
@@ -79,7 +84,17 @@
 <!--Navbar-->  
 {% include "navbar.html" %}
 
-
+{% if showFeedback %}
+<div class="container sticky-top" id="pop_up">
+  <button class="float-right" onclick="closePopUp()">x</button>
+  <div class="display-flex justify-content-center">
+      <h1 class="display-flex ">Thank you for ordering from Teds!</h1>
+      <h4>Customer Details: {{order_details.first_name}} {{order_details.last_name}}</h3>
+      <h4>Customer Email: {{order_details.email}}</h4>
+      <h4>Pickup Time: {{order_details.pick_up_time}}</h4>
+  </div>
+</div>
+{% endif %}
 
 
 
@@ -246,11 +261,6 @@ function showSnacks(){
     document.getElementById("mySidenav").style.width = "0";
   }
 
-
-
-
-
-
 //Add to Cart
 function addToCartClick(clicked_id){
   if (firstClick == 0){
@@ -276,6 +286,11 @@ function addToCartClick(clicked_id){
           }
  asyncGetCall();
 }
+
+function closePopUp(){
+    document.getElementById("pop_up").style.display="none";
+  }
+
 
 
 
